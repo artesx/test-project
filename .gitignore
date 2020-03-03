@@ -1,0 +1,6 @@
+.vscode
+docker
+test-work-back/.env
+test-work-front/.env
+test-work-back/node_modules
+test-work-front/node_modules

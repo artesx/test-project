@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  mongo:
+    container_name: "test-work-mongodb"
+    image: mongo:4
+    restart: "always"
+    volumes:
+      - "./docker/.data/db:/data/db"
+    ports:
+      - "12047:27017"
+
+  test-backend_app:
+    container_name: "test-work-backend"
+    restart: "always"
+    build: ./test-work-back
+    volumes:
+      - ./test-work-back:/usr/src/app
+      - ./test-work-back/node_modules:/usr/src/app/node_modules
+    ports:
+      - "12001:3000"
+    links:
+      - mongo
+    depends_on:
+    - mongo
+
+  test-frontend_app:
+    container_name: "test-work-frontend"
+    restart: "always"
+    build: ./test-work-front/dev
+    volumes:
+      - ./test-work-front:/app
+      - ./test-work-front/node_modules:/app/node_modules
+    ports:
+      - "12000:3000"
